@@ -1,0 +1,50 @@
+{
+  "name": "api-filmes",
+  "version": "1.0.0",
+  "description": "API de filmes para teste da cubos.io",
+  "main": "index.js",
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development ts-node-dev --respawn --transpile-only -r tsconfig-paths/register -r dotenv/config src/server.ts",
+    "start": "node dist/server.js",
+    "test": "vitest run"
+  },
+  "author": "Larissa Sousa Silva",
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/client": "^6.7.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "helmet": "^8.1.0",
+    "pg": "^8.15.6",
+    "pino": "^9.6.0",
+    "pino-pretty": "^13.0.0"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.1",
+    "@types/node": "^22.15.3",
+    "@types/pg": "^8.11.14",
+    "@vitest/coverage-istanbul": "^3.1.2",
+    "@vitest/ui": "^3.1.2",
+    "cross-env": "^7.0.3",
+    "eslint": "^9.26.0",
+    "eslint-config-prettier": "^10.1.2",
+    "eslint-plugin-import": "^2.31.0",
+    "prettier": "^3.5.3",
+    "prisma": "^6.7.0",
+    "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.8.3",
+    "vite": "^6.3.4",
+    "vitest": "^3.1.2"
+  },
+  "prettier": {
+    "useTabs": false,
+    "semi": false,
+    "singleQuote": true,
+    "jsxSingleQuote": true,
+    "bracketSpacing": true,
+    "arrowParens": "always"
+  }
+}
