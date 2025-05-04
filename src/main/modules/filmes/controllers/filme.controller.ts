@@ -3,9 +3,7 @@ import {
   ok,
   created,
   notFound,
-  badRequest,
   serverError,
-  HttpRequest,
   HttpResponse,
 } from '@main/infra/http'
 import { FilmePatchPayload, FilmePostPayload } from '../types'
@@ -40,10 +38,13 @@ export class FilmeController {
 
   async update(id: number, data: FilmePatchPayload): Promise<HttpResponse> {
     try {
-      const filme = await this.filmeService.updateFilme(id, data)
-      if (!filme) {
+      const exists = await this.filmeService.getFilmeById(id)
+
+      if (!exists) {
         return notFound()
       }
+
+      const filme = await this.filmeService.updateFilme(id, data)
       return ok(filme)
     } catch (error) {
       return serverError(error as Error)
@@ -52,10 +53,13 @@ export class FilmeController {
 
   async delete(id: number): Promise<HttpResponse> {
     try {
-      const sucesso = await this.filmeService.deleteFilme(id)
-      if (!sucesso) {
+      const filme = await this.filmeService.getFilmeById(id)
+
+      if (!filme) {
         return notFound()
       }
+
+      await this.filmeService.deleteFilme(id)
       return ok({ message: 'Filme deletado com sucesso' })
     } catch (error) {
       return serverError(error as Error)

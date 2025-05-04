@@ -1,3 +1,4 @@
+import { parseReaisParaCentavos } from '@main/base/utils'
 import { FilmeRepository } from '../repositories'
 import { Filme, FilmePatchPayload, FilmePostPayload } from '../types'
 
@@ -9,10 +10,11 @@ export class FilmeService {
   }
 
   async createFilme(data: FilmePostPayload): Promise<Filme> {
-    return this.filmeRepository.create(data)
+    const parsedData = this.parseFilmePayload(data)
+    return this.filmeRepository.create(parsedData)
   }
 
-  async getFilmeById(id: number): Promise<Filme> {
+  async getFilmeById(id: number): Promise<Filme | null> {
     return this.filmeRepository.findById(id)
   }
 
@@ -22,5 +24,21 @@ export class FilmeService {
 
   async deleteFilme(id: number) {
     return this.filmeRepository.delete(id)
+  }
+
+  private parseFilmePayload(data: FilmePostPayload): FilmePostPayload {
+    return {
+      ...data,
+      dtLancamento: new Date(data.dtLancamento),
+      orcamento: this.convertCurrencyField(data.orcamento),
+      receita: this.convertCurrencyField(data.receita),
+      lucro: this.convertCurrencyField(data.lucro),
+    }
+  }
+
+  private convertCurrencyField(value?: number | string): number | undefined {
+    if (value === undefined) return undefined
+    if (typeof value === 'string') return parseReaisParaCentavos(value)
+    return value
   }
 }
