@@ -1,6 +1,5 @@
-import { Request, Response, NextFunction, RequestHandler } from 'express'
+import { RequestHandler } from 'express'
 import jwt from 'jsonwebtoken'
-import { unauthorized } from '../http';
 
 declare global {
     namespace Express {
