@@ -4,7 +4,7 @@
   "description": "API de filmes para teste da cubos.io",
   "main": "index.js",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development ts-node-dev --respawn --transpile-only -r tsconfig-paths/register -r dotenv/config src/server.ts",
+    "dev": "npx prisma generate && ts-node-dev --exit-child --transpile-only --ignore-watch node_modules --respawn src/server.ts",
     "start": "node dist/server.js",
     "test": "vitest run"
   },

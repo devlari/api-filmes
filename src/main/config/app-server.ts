@@ -3,11 +3,10 @@ import helmet from 'helmet';
 import setupRoutes from './routes';
 import logger from '@main/tools/logger';
 import cors from 'cors';
-import { Pool } from 'pg';
+import { prismaDB } from '../infra/db';
 
 export class AppServer {
-  public app: Express;
-  public connectionPool?: Pool;
+  public app: Express
 
   constructor() {
     this.app = express();
@@ -15,42 +14,27 @@ export class AppServer {
 
   async connect(): Promise<void> {
     try {
-      this.connectionPool = new Pool({
-        user: process.env.USER,
-        host: process.env.HOST,
-        database: process.env.DATABASE,
-        password: process.env.PASSWORD,
-        port: Number(process.env.DB_PORT),
-        max: 10
-      })
+      await prismaDB.$connect(); 
       console.log('Conexão com o banco estabelecida');
     } catch (error) {
-      console.log(error);
+      console.log('Erro ao conectar ao banco', error);
     }
   }
 
-  async testConnection() {
+  async testConnection(): Promise<void> {
     try {
-      if (!this.connectionPool) {
-        console.log('não há pool de conexão')
-        return;
-      };
-
-      const client = await this.connectionPool.connect();
+      await prismaDB.$queryRaw`SELECT NOW()`; 
       logger.info('Conexão com o banco de dados bem-sucedida!');
-      const result = await client.query('SELECT NOW()');
-      logger.info(`Data e hora atual do banco de dados: ${result.rows[0].now}`);
-      client.release();
     } catch (error) {
       logger.error('Erro ao conectar ao banco de dados:', error);
     }
-  };
+  }
 
   async start(port: number, host = ''): Promise<void> {
-    await this.connect();
+    await this.connect(); 
 
-    this.middlewares();
-    this.routes();
+    this.middlewares(); 
+    this.routes(); 
 
     if (host != '') {
       this.app.listen(port, host, () =>
@@ -61,9 +45,10 @@ export class AppServer {
     }
   }
 
-  stop(): void {
-    logger.info('Parando');
-  }
+  // stop(): void {
+  //   logger.info('Parando servidor');
+  //   this.prisma.$disconnect(); 
+  // }
 
   private middlewares(): void {
     this.app.use(helmet());
@@ -74,11 +59,6 @@ export class AppServer {
 
   private routes(): void {
 
-    if (!this.connectionPool) {
-      console.log('sem conexão');
-      return;
-    }
-
-    setupRoutes(this.app, this.connectionPool);
+    setupRoutes(this.app);
   }
 }

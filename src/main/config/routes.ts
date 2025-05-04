@@ -1,10 +1,11 @@
 import { Express, Router } from 'express';
 import { pingRoutes } from '@main/routes';
-import { Pool } from 'pg';
+import { filmeRoutes } from '@main/modules/filmes/routes';
 
-export default function setupRoutes(app: Express, pool: Pool) {
+export default function setupRoutes(app: Express) {
   const router = Router();
   app.use('/api', router);
 
   pingRoutes(router);
-};
+  filmeRoutes(router);
+}
