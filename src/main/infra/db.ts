@@ -1,6 +1,6 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from '@prisma/client'
 
-let prisma: PrismaClient;
-prisma = new PrismaClient();
+let prisma: PrismaClient
+prisma = new PrismaClient()
 
-export const prismaDB = prisma;
+export const prismaDB = prisma

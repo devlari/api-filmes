@@ -1,17 +1,17 @@
-import pino from "pino";
-import pretty from "pino-pretty";
+import pino from 'pino'
+import pretty from 'pino-pretty'
 
 const stream = pretty({
   colorize: true,
-  translateTime: "SYS:mm/dd HH:MM:ss",
-  ignore: "pid,hostname",
-});
+  translateTime: 'SYS:mm/dd HH:MM:ss',
+  ignore: 'pid,hostname',
+})
 
 const logger = pino(
   {
-    level: process.env.LOG_LEVEL || "info",
+    level: process.env.LOG_LEVEL || 'info',
   },
-  stream
-);
+  stream,
+)
 
-export default logger;
+export default logger
