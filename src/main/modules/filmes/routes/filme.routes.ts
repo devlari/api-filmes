@@ -20,6 +20,14 @@ export function filmeRoutes(router: Router): void {
     res.status(response.statusCode).json(response.body)
   })
 
+  router.get('/filmes', async (req: Request, res: Response) => {
+    const page = Number(req.query.page) || 1
+    const perPage = Number(req.query.perPage) || 10
+
+    const response = await filmeController.list(page, perPage)
+    res.status(response.statusCode).json(response.body)
+  })
+
   router.put(
     '/filme/:id',
     validateBody(filmePatchSchema),

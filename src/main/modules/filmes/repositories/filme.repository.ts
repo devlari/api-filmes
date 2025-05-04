@@ -1,4 +1,9 @@
-import { Filme, FilmePatchPayload, FilmePostPayload } from '../types'
+import {
+  Filme,
+  FilmePatchPayload,
+  FilmePostPayload,
+  PaginationRequest,
+} from '../types'
 import { prismaDB } from '@/main/infra/db'
 
 export class FilmeRepository {
@@ -24,6 +29,27 @@ export class FilmeRepository {
 
   async delete(id: number): Promise<void> {
     await prismaDB.filme.delete({ where: { id } })
+  }
+
+  async list(page: number, perPage: number): Promise<PaginationRequest> {
+    const skip = (page - 1) * perPage
+    const [data, total] = await prismaDB.$transaction([
+      prismaDB.filme.findMany({
+        skip,
+        take: perPage,
+      }),
+      prismaDB.filme.count(),
+    ])
+
+    const totalPages = Math.ceil(total / perPage)
+    const transformedData = data.map((item) => this.normalizeFilme(item))
+
+    return {
+      page,
+      perPage,
+      totalPages,
+      data: transformedData,
+    }
   }
 
   private normalizeFilme(data: any): Filme {

@@ -40,3 +40,10 @@ export type FilmeDTO = {
   lucro: number | null
   linkTrailer: string | null
 }
+
+export type PaginationRequest = {
+  page: number
+  perPage: number
+  totalPages: number
+  data: Filme[]
+}

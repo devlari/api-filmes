@@ -5,6 +5,7 @@ import {
   notFound,
   serverError,
   HttpResponse,
+  badRequest,
 } from '@main/infra/http'
 import { FilmePatchPayload, FilmePostPayload } from '../types'
 
@@ -31,6 +32,23 @@ export class FilmeController {
         return notFound()
       }
       return ok(filme)
+    } catch (error) {
+      return serverError(error as Error)
+    }
+  }
+
+  async list(page: number, perPage: number): Promise<HttpResponse> {
+    try {
+      if (page < 1 || perPage < 1) {
+        return badRequest(new Error('Page e perPage devem ser maiores que 0'))
+      }
+
+      if (page > 100 || perPage > 100) {
+        return badRequest(new Error('Page deve ser menor ou igual a 100'))
+      }
+
+      const filmes = await this.filmeService.listFilmes(page, perPage)
+      return ok(filmes)
     } catch (error) {
       return serverError(error as Error)
     }

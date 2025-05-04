@@ -18,6 +18,10 @@ export class FilmeService {
     return this.filmeRepository.findById(id)
   }
 
+  async listFilmes(page: number, perPage: number) {
+    return this.filmeRepository.list(page, perPage)
+  }
+
   async updateFilme(id: number, data: FilmePatchPayload) {
     return this.filmeRepository.update(id, data)
   }
