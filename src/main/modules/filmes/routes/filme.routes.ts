@@ -2,7 +2,7 @@ import { Router, Request, Response } from 'express'
 import { FilmeController } from '../controllers/filme.controller'
 import { FilmeService } from '../services/filme.service'
 import { FilmeRepository } from '../repositories/filme.repository'
-import { validateBody } from '@/main/infra/middlewares/zod.middleware'
+import { validateBody } from '@/main/infra/middlewares'
 import { filmePatchSchema, filmePostSchema } from '../validations'
 
 export function filmeRoutes(router: Router): void {

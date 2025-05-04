@@ -2,6 +2,7 @@ import { Express, Router } from 'express'
 import { pingRoutes } from '@main/routes'
 import { filmeRoutes } from '@main/modules/filmes/routes'
 import { autenticacaoRoutes } from '../modules/autenticacao/routes'
+import { verificaAutenticacao } from '../infra/middlewares'
 
 export default function setupRoutes(app: Express) {
   const router = Router()
@@ -9,5 +10,8 @@ export default function setupRoutes(app: Express) {
 
   pingRoutes(router)
   autenticacaoRoutes(router)
+
+  router.use(verificaAutenticacao);
+
   filmeRoutes(router)
 }

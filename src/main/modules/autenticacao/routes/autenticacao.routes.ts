@@ -3,7 +3,7 @@ import { AutenticacaoController } from "../controllers"
 import { AutenticacaoRepository } from "../repositories"
 import { AutenticacaoService } from "../services"
 import { loginSchema, registerSchema } from "../validations"
-import { validateBody } from "@/main/infra/middlewares/zod.middleware"
+import { validateBody } from "@/main/infra/middlewares"
 
 
 export function autenticacaoRoutes(router: Router): void {
