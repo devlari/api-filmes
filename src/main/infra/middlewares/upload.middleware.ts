@@ -10,5 +10,5 @@ export const uploadMulter = multer({
         const ext = path.extname(file.originalname).toLowerCase()
         cb(null, allowed.includes(ext))
     },
-    limits: { fileSize: 10 * 1024 * 1024 }
+    limits: { fileSize: 5 * 1024 * 1024 }
 })
