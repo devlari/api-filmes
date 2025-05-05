@@ -11,12 +11,14 @@ export function filmeRoutes(router: Router): void {
   const filmeController = new FilmeController(filmeService)
 
   router.post('/filmes', validateBody(filmePostSchema), async (req, res) => {
-    const response = await filmeController.create(req.body)
+    const usuarioId = req.user.userId
+    const response = await filmeController.create(req.body, usuarioId)
     res.status(response.statusCode).json(response.body)
   })
 
   router.get('/filme/:id', async (req: Request, res: Response) => {
-    const response = await filmeController.getById(Number(req.params.id))
+    const usuarioId = req.user.userId
+    const response = await filmeController.getById(Number(req.params.id), usuarioId)
     res.status(response.statusCode).json(response.body)
   })
 
@@ -24,7 +26,8 @@ export function filmeRoutes(router: Router): void {
     const page = Number(req.query.page) || 1
     const perPage = Number(req.query.perPage) || 10
 
-    const response = await filmeController.list(page, perPage)
+    const usuarioId = req.user.userId
+    const response = await filmeController.list(page, perPage, usuarioId)
     res.status(response.statusCode).json(response.body)
   })
 
@@ -32,16 +35,21 @@ export function filmeRoutes(router: Router): void {
     '/filme/:id',
     validateBody(filmePatchSchema),
     async (req: Request, res: Response) => {
+      const usuarioId = req.user.userId
+
       const response = await filmeController.update(
         Number(req.params.id),
         req.body,
+        usuarioId
       )
       res.status(response.statusCode).json(response.body)
     },
   )
 
   router.delete('/filme/:id', async (req: Request, res: Response) => {
-    const response = await filmeController.delete(Number(req.params.id))
+    const usuarioId = req.user.userId
+
+    const response = await filmeController.delete(Number(req.params.id), usuarioId)
     res.status(response.statusCode).json(response.body)
   })
 }

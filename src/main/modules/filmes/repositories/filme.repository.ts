@@ -7,15 +7,22 @@ import {
 import { prismaDB } from '@/main/infra/db'
 
 export class FilmeRepository {
-  constructor() {}
+  constructor() { }
 
-  async create(data: FilmePostPayload): Promise<Filme> {
-    const filme = await prismaDB.filme.create({ data })
+  async create(data: FilmePostPayload, usuarioId: number): Promise<Filme> {
+    const filme = await prismaDB.filme.create({
+      data: {
+        ...data,
+        usuario: {
+          connect: { id: usuarioId },
+        },
+      }
+    })
     return this.normalizeFilme(filme)
   }
 
-  async findById(id: number): Promise<Filme | null> {
-    const filme = await prismaDB.filme.findUnique({ where: { id } })
+  async findById(id: number, usuarioId: number): Promise<Filme | null> {
+    const filme = await prismaDB.filme.findUnique({ where: { id, usuarioId } })
     return this.normalizeFilme(filme)
   }
 
@@ -31,12 +38,15 @@ export class FilmeRepository {
     await prismaDB.filme.delete({ where: { id } })
   }
 
-  async list(page: number, perPage: number): Promise<PaginationRequest> {
+  async list(page: number, perPage: number, userId: number): Promise<PaginationRequest> {
     const skip = (page - 1) * perPage
     const [data, total] = await prismaDB.$transaction([
       prismaDB.filme.findMany({
         skip,
         take: perPage,
+        where: {
+          usuarioId: userId,
+        },
       }),
       prismaDB.filme.count(),
     ])

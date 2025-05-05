@@ -16,18 +16,18 @@ export class FilmeController {
     this.filmeService = filmeService
   }
 
-  async create(data: FilmePostPayload): Promise<HttpResponse> {
+  async create(data: FilmePostPayload, usuarioId: number): Promise<HttpResponse> {
     try {
-      const filme = await this.filmeService.createFilme(data)
+      const filme = await this.filmeService.createFilme(data, usuarioId)
       return created(filme)
     } catch (error) {
       return serverError(error as Error)
     }
   }
 
-  async getById(id: number): Promise<HttpResponse> {
+  async getById(id: number, usuarioId: number): Promise<HttpResponse> {
     try {
-      const filme = await this.filmeService.getFilmeById(id)
+      const filme = await this.filmeService.getFilmeById(id, usuarioId)
       if (!filme) {
         return notFound()
       }
@@ -37,7 +37,7 @@ export class FilmeController {
     }
   }
 
-  async list(page: number, perPage: number): Promise<HttpResponse> {
+  async list(page: number, perPage: number, userId: number): Promise<HttpResponse> {
     try {
       if (page < 1 || perPage < 1) {
         return badRequest(new Error('Page e perPage devem ser maiores que 0'))
@@ -47,16 +47,16 @@ export class FilmeController {
         return badRequest(new Error('Page deve ser menor ou igual a 100'))
       }
 
-      const filmes = await this.filmeService.listFilmes(page, perPage)
+      const filmes = await this.filmeService.listFilmes(page, perPage, userId)
       return ok(filmes)
     } catch (error) {
       return serverError(error as Error)
     }
   }
 
-  async update(id: number, data: FilmePatchPayload): Promise<HttpResponse> {
+  async update(id: number, data: FilmePatchPayload, usuarioId: number): Promise<HttpResponse> {
     try {
-      const exists = await this.filmeService.getFilmeById(id)
+      const exists = await this.filmeService.getFilmeById(id, usuarioId)
 
       if (!exists) {
         return notFound()
@@ -69,9 +69,9 @@ export class FilmeController {
     }
   }
 
-  async delete(id: number): Promise<HttpResponse> {
+  async delete(id: number, usuarioId: number): Promise<HttpResponse> {
     try {
-      const filme = await this.filmeService.getFilmeById(id)
+      const filme = await this.filmeService.getFilmeById(id, usuarioId)
 
       if (!filme) {
         return notFound()
