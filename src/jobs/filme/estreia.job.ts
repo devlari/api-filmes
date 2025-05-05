@@ -28,11 +28,11 @@ cron.schedule('0 8 * * *', async () => {
 
     for (const filme of filmesEstreando) {
         await resend.emails.send({
-            from: 'Filmes App <onboarding@resend.dev>',
+            from: 'Filmes App <devlari.online>',
             to: `${filme.usuario.email}`,
             subject: `🎬 Seu filme "${filme.tituloTraduzido}" estreia hoje!`,
             html: `<h1>${filme.tituloTraduzido}</h1><p>Hoje é o grande dia da estreia! 🎉</p>`,
-        })
+        });
 
         logger.info(`Email enviado para ${filme.usuario.email} sobre "${filme.tituloTraduzido}"`)
     }
