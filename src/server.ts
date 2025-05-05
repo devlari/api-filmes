@@ -1,3 +1,4 @@
+import '@/jobs/filme/estreia.job'
 import { AppServer } from './main/config/app-server'
 import logger from '@main/tools/logger'
 
@@ -9,7 +10,7 @@ enum ExitStatus {
   Success = 0,
 }
 
-;(async (): Promise<void> => {
+; (async (): Promise<void> => {
   try {
     const PORT = process.env.PORT ?? 3000
     const HOST = process.env.API_HOST ?? ''
