@@ -8,10 +8,12 @@ datasource db {
 }
 
 model Usuario {
-  id    Int    @id @default(autoincrement())
-  nome  String
-  email String @unique
-  senha String
+  id     Int     @id @default(autoincrement())
+  nome   String
+  email  String  @unique
+  senha  String
+
+  filmes Filme[]
 }
 
 model Filme {
@@ -26,6 +28,9 @@ model Filme {
   receita          Int?
   lucro            Int?
   linkTrailer      String?
+
+  usuarioId        Int
+  usuario          Usuario   @relation(fields: [usuarioId], references: [id])
 
   generos          GeneroFilme[]
 }

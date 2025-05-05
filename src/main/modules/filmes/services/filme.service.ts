@@ -9,17 +9,17 @@ export class FilmeService {
     this.filmeRepository = filmeRepository
   }
 
-  async createFilme(data: FilmePostPayload): Promise<Filme> {
+  async createFilme(data: FilmePostPayload, usuarioId: number): Promise<Filme> {
     const parsedData = this.parseFilmePayload(data)
-    return this.filmeRepository.create(parsedData)
+    return this.filmeRepository.create(parsedData, usuarioId)
   }
 
-  async getFilmeById(id: number): Promise<Filme | null> {
-    return this.filmeRepository.findById(id)
+  async getFilmeById(id: number, usuarioId: number): Promise<Filme | null> {
+    return this.filmeRepository.findById(id, usuarioId)
   }
 
-  async listFilmes(page: number, perPage: number) {
-    return this.filmeRepository.list(page, perPage)
+  async listFilmes(page: number, perPage: number, userId: number) {
+    return this.filmeRepository.list(page, perPage, userId)
   }
 
   async updateFilme(id: number, data: FilmePatchPayload) {

@@ -1,5 +1,6 @@
 export type Filme = {
   id: number
+  usuarioId: number
   tituloOriginal: string
   tituloTraduzido: string
   descricao: string
@@ -39,6 +40,7 @@ export type FilmeDTO = {
   receita: number | null
   lucro: number | null
   linkTrailer: string | null
+  usuarioId: number
 }
 
 export type PaginationRequest = {
