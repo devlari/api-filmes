@@ -4,6 +4,7 @@ import { filmeRoutes } from '@main/modules/filmes/routes'
 import { autenticacaoRoutes } from '../modules/autenticacao/routes'
 import { errorHandler, verificaAutenticacao } from '../infra/middlewares'
 import { uploadRoutes } from '../modules/filmes/routes/upload.routes'
+import { usuarioRoutes } from '../modules/usuario/routes'
 
 export default function setupRoutes(app: Express) {
   const router = Router()
@@ -16,6 +17,7 @@ export default function setupRoutes(app: Express) {
 
   filmeRoutes(router)
   uploadRoutes(router)
+  usuarioRoutes(router)
 
   router.use(errorHandler)
 }
