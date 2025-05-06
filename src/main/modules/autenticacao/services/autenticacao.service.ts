@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
-import { AutenticacaoRepository } from '../repositories'
-import { LoginPayload, Tokens, Usuario, UsuarioPostPayload } from '../types'
+import { AutenticacaoRepository } from '../respositories'
+import { LoginPayload, Tokens, Usuario, UsuarioApiResponse, UsuarioPostPayload } from '../types'
 
 const accessTokenSecret = process.env.JWT_SECRET || 'access-secret'
 const refreshTokenSecret = process.env.JWT_REFRESH_SECRET || 'refresh-secret'
@@ -30,7 +30,7 @@ export class AutenticacaoService {
         }
     }
 
-    async registro(payload: UsuarioPostPayload): Promise<Usuario> {
+    async registro(payload: UsuarioPostPayload): Promise<UsuarioApiResponse> {
         const usuarioExistente = await this.autenticacaoRepository.findByEmail(payload.email)
 
         if (usuarioExistente) {

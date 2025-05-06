@@ -1,6 +1,6 @@
 import { Router, Response, Request } from "express"
 import { AutenticacaoController } from "../controllers"
-import { AutenticacaoRepository } from "../repositories"
+import { AutenticacaoRepository } from "../respositories"
 import { AutenticacaoService } from "../services"
 import { loginSchema, registerSchema } from "../validations"
 import { validateBody } from "@/main/infra/middlewares"

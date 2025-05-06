@@ -11,6 +11,8 @@ export type UsuarioPostPayload = {
     senha: string
 }
 
+export type UsuarioApiResponse = Omit<Usuario, 'senha'>
+
 export type LoginPayload = {
     email: string
     senha: string
