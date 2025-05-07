@@ -22,7 +22,7 @@ export function autenticacaoRoutes(router: Router): void {
     })
 
     router.post('/auth/refresh', async (req: Request, res: Response) => {
-        const response = await autenticacaoController.refreshToken(req.body)
+        const response = await autenticacaoController.refreshToken(req.body.refreshToken)
         res.status(response.statusCode).json(response.body)
     })
 }

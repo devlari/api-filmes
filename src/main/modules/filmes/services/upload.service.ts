@@ -16,11 +16,10 @@ export class UploadService {
                 })
                 .promise()
 
-            const url = `${process.env.R2_ENDPOINT}/${process.env.R2_BUCKET_NAME}/${key}`
+            const url = `${process.env.R2_BUCKET_URL}/${key}`
 
             return url
         } catch (error) {
-            console.log(error)
             throw new Error('Erro ao enviar imagem para o R2')
         }
     }

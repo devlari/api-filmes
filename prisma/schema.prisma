@@ -21,6 +21,7 @@ model Filme {
   tituloOriginal   String
   tituloTraduzido  String
   descricao        String
+  sinopse          String?
   orcamento        Int?
   dtLancamento     DateTime
   urlImagem        String?

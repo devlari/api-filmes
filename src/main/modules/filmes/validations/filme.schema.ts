@@ -17,6 +17,11 @@ export const filmePostSchema = z.object({
     .string({ required_error: 'A descrição é obrigatória' })
     .min(1, { message: 'A descrição não pode ser vazia' })
     .max(1000, { message: 'A descrição não pode ter mais de 1000 caracteres' }),
+  sinopse: z
+    .string()
+    .min(1, { message: 'A sinopse não pode ser vazia' })
+    .max(1000, { message: 'A sinopse não pode ter mais de 1000 caracteres' })
+    .optional(),
   orcamento: z
     .number()
     .int()

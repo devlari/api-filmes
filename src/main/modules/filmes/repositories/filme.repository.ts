@@ -66,6 +66,7 @@ export class FilmeRepository {
     if (!data) return data
     return {
       ...data,
+      sinopse: data.sinopse ?? undefined,
       orcamento: data.orcamento ?? undefined,
       receita: data.receita ?? undefined,
       lucro: data.lucro ?? undefined,

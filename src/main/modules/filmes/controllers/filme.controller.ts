@@ -21,6 +21,7 @@ export class FilmeController {
       const filme = await this.filmeService.createFilme(data, usuarioId)
       return created(filme)
     } catch (error) {
+      console.log(error)
       return serverError(error as Error)
     }
   }

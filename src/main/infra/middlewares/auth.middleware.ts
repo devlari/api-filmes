@@ -1,5 +1,5 @@
 import { RequestHandler } from 'express'
-import jwt from 'jsonwebtoken'
+import jwt, { JsonWebTokenError, TokenExpiredError } from 'jsonwebtoken'
 
 declare global {
     namespace Express {
@@ -23,6 +23,11 @@ export const verificaAutenticacao: RequestHandler = (req, res, next) => {
         req.user = decoded
         next()
     } catch (error) {
-        return
+        if (error instanceof TokenExpiredError) {
+            res.status(401).json({ message: 'Token expirado' })
+        } else if (error instanceof JsonWebTokenError) {
+            res.status(401).json({ message: 'Token inválido' })
+        }
+        res.status(401).json({ message: 'Falha na autenticação' })
     }
 }

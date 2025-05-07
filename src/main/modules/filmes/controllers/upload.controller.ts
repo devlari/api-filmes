@@ -14,8 +14,6 @@ export class UploadController {
 
     async upload(file: Express.Multer.File | undefined): Promise<HttpResponse> {
 
-        console.log(file)
-
         if (!file) {
             return badRequest(new Error('Arquivo não encontrado'))
         }
