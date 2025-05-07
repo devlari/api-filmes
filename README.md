@@ -24,13 +24,13 @@ A proposta era criar uma API para gerenciamento de filmes, com autenticação, c
 
 ---
 
-##📦 Instalações necessárias
+## 📦 Instalações necessárias
 - Node.js (recomendada versão 18 ou superior)
 - PostgreSQL rodando localmente ou remotamente
 - Prisma CLI (opcional, mas recomendado)
 - Terminal de sua preferência
 
-##▶️ Como rodar o projeto localmente
+## ▶️ Como rodar o projeto localmente
 Siga os passos abaixo para clonar o repositório e iniciar a API em ambiente de desenvolvimento:
 
 1. Clone o repositório
